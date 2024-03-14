@@ -10,7 +10,7 @@ A domain configured on Cloudflare
 A DNS record (e.g., A record) that you want to update automatically
 
 # Setup
-1. Clone this repository to your local machine.
-2. Navigate to the cloned directory.
-3. Open the config.sh file and provide your Cloudflare API key, API email, domain name, and DNS record name that you want to update.
+1. Clone this repository to your local machine.   
+3. Navigate to the cloned directory.
+4. Open the config.sh file and provide your Cloudflare API key, API email, domain name, and DNS record name that you want to update.
    
