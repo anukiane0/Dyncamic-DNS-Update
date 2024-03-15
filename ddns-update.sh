@@ -1,13 +1,13 @@
 #!/bin/bash
 
-auth_email="ashubitidze11@gmail.com"                                        
-auth_method="token"                                 
-auth_key="jBaqJ7AWMEXx8R9B_Az88BY9iNPmF3Yu-aQR0IWH"                                          
-zone_identifier="009e8e6656797ee1f3f1abba5bccb0b7"                            
-record_name="anukiane.store"                                     
-ttl="3600"                                         
-proxy="false"                                       
-sitename="anukiane.store"                                         
+auth_email=""                                        
+auth_method=""                                 
+auth_key=""                                          
+zone_identifier=""                            
+record_name=""                                     
+ttl=""                                         
+proxy=""                                       
+sitename=""                                         
 
 ip=$(curl -s https://api.ipify.org || curl -s https://ipv4.icanhazip.com)
 
