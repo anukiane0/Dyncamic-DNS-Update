@@ -1,13 +1,13 @@
 #!/bin/bash
 
-auth_email=""                                        
-auth_method=""                                 
-auth_key=""                                          
-zone_identifier=""                            
-record_name=""                                     
-ttl=""                                         
-proxy=""                                       
-sitename=""                                         
+auth_email=""                                        ## Cloudflare account email
+auth_method=""                                       ## Recommended Authorization Method - API Token
+auth_key=""                                          ## API Token key
+zone_identifier=""                                   ## Each registered domain on cloudflare has its own Zone ID
+record_name=""                                       ## Record name 
+ttl=""                                               ## set TTL
+proxy=""                                             ## Boolean for Proxy
+sitename=""                                          ## website name
 
 ip=$(curl -s https://api.ipify.org || curl -s https://ipv4.icanhazip.com)
 
