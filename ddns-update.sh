@@ -9,7 +9,7 @@ ttl=""                                               ## set TTL
 proxy=""                                             ## Boolean for Proxy
 sitename=""                                          ## website name
 
-ip=$(curl -s https://api.ipify.org || curl -s https://ipv4.icanhazip.com)
+local_ip=$(curl -s https://api.ipify.org || curl -s https://ipv4.icanhazip.com)
 
 if [[ "${auth_method}" == "global" ]]; then
   auth_header="X-Auth-Key:"
@@ -22,12 +22,16 @@ record=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identi
                       -H "$auth_header $auth_key" \
                       -H "Content-Type: application/json")
 
-old_ip=$(echo "$record" | sed -E 's/.*"content":"(([0-9]{1,3}\.){3}[0-9]{1,3})".*/\1/')
+record_ip=$(echo "$record" | sed -E 's/.*"content":"(([0-9]{1,3}\.){3}[0-9]{1,3})".*/\1/')
 
-record_identifier=$(echo "$record" | sed -E 's/.*"id":"([A-Za-z0-9_]+)".*/\1/')
-
-update=$(curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$record_identifier" \
-                     -H "X-Auth-Email: $auth_email" \
-                     -H "$auth_header $auth_key" \
-                     -H "Content-Type: application/json" \
-                     --data "{\"type\":\"A\",\"name\":\"$record_name\",\"content\":\"$ip\",\"ttl\":\"$ttl\",\"proxied\":${proxy}}")
+if [ "$local_ip" != "$record_ip" ]; then
+  record_identifier=$(echo "$record" | sed -E 's/.*"id":"([A-Za-z0-9_]+)".*/\1/')
+  update=$(curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$record_identifier" \
+                       -H "X-Auth-Email: $auth_email" \
+                       -H "$auth_header $auth_key" \
+                       -H "Content-Type: application/json" \
+                       --data "{\"type\":\"A\",\"name\":\"$record_name\",\"content\":\"$local_ip\",\"ttl\":\"$ttl\",\"proxied\":${proxy}}")
+  echo "Sucessfully Updated!"
+else
+  exit 1
+fi
